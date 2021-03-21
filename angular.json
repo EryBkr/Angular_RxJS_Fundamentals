@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "RxJSExample"
+    }
+  },
+  "defaultProject": "RxJSExample",
+  "cli": {
+    "analytics": false
+  }
 }
