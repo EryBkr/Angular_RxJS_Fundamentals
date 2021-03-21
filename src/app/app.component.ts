@@ -15,7 +15,7 @@ export class AppComponent {
     const otherOf = of("a", "b", "c", "d");
 
     //iki farklı observable yapının datalarını birleştirmemizi sağlıyor.İlk gelen data grubunu yayınlıyor
-    otherOf.pipe(concatMap(value => myArray.pipe(delay(2000), map(number => value + number)))).subscribe(data=>{
+    otherOf.pipe(concatMap(value => myArray.pipe(delay(1000), map(number => value + number)))).subscribe(data=>{
       console.log(data);
     });
   }
