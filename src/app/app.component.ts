@@ -1,7 +1,7 @@
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
-import { interval, of } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
-import {throttle} from "rxjs/operators";
+import { interval, from } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
+import {throttleTime} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,11 @@ import {throttle} from "rxjs/operators";
 export class AppComponent {
 
   constructor() {
-    const myInterval = interval(1000);
 
-    //Gecikmeli olarak data yayınlamamızı sağlar
-    myInterval.pipe(throttle(x=>interval(2000))).subscribe(data => {
+    const myArray = from([600,700,800,900,1000,2000,3000,4000,5000,6000,7000,8000,9000]);
+
+    //Gecikmeli olarak data yayınlamamızı sağlar.İçerisine ms cinsinden değer alabilir
+    myArray.pipe(throttleTime(2000)).subscribe(data => {
       console.log(data);
     });
   }
