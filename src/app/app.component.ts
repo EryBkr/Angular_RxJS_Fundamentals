@@ -1,7 +1,8 @@
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
 import { interval, of } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
-import { finalize, take } from "rxjs/operators";
+import {  repeat } from "rxjs/operators";
+import {ajax} from "rxjs/ajax";
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,8 @@ import { finalize, take } from "rxjs/operators";
 export class AppComponent {
 
   constructor() {
-    //İşlem tamamlandıktan sonra Execute edilecek işlemi tanımlamamızı sağlar
-    interval(1000).pipe(take(5), finalize(() => console.log("İşlem Tamamlandı"))).subscribe(data => {
+    //İşlemin tekrar sayısını belirtir
+    ajax.getJSON("https://jsonplaceholder.typicode.com/posts/1").pipe(repeat(5)).subscribe(data => {
       console.log(data);
     });
   }
