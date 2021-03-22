@@ -1,6 +1,7 @@
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
-import { of, fromEvent, interval, merge } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
+import { of, fromEvent, interval } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
+import { mergeAll, map } from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,15 @@ export class AppComponent {
 
   constructor() {
     const myEvent = fromEvent(document, "click");
-    const myInterval = interval(1000);
 
-    //Merge farklı Observable yapılarını beraber yayımlayan yapıdır.
-    const myMerge = merge(myEvent, myInterval).subscribe(data => {
+
+    const myMerge = myEvent.pipe(map(data => interval(1000)));
+
+    //İki farklı observable yapıyı birleştirmemizi ve eş zamanlı data yayımını sağlar
+    myMerge.pipe(mergeAll()).subscribe(data => {
       console.log(data);
     });
+
   }
 
 }
