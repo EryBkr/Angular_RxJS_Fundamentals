@@ -13,20 +13,12 @@ export class AppComponent {
 
   constructor() {
 
-    const myInterval = interval(1000);
-    myInterval.pipe(map(value => {
 
-      if (value > 6) {
-        throw "Hata Var";
-      }
-      else {
-        return value;
-      }
+    //Pipe içerisinden cathError ile hatayı alabiliriz.Döndüğümüz değer subscribe içerisine normal data olarak gidecektir
+    const myData = ajax.getJSON("https://jsonplaceholder.typicode.com/postss").pipe(catchError(err=>of("Pipe İçerisindeki Hata")));
 
-    }), retryWhen(err => err.pipe(tap(x => console.log(x))))).subscribe(data => {
-      console.log(data);
-    }, err => { console.log(err) });
-
+    //Subscripe parametresi içerisinden hatayı alabiliriz
+    myData.subscribe(data => { console.log(data) }, err => { console.log("Subscribe içerisinde ki hata") });
 
 
   }
