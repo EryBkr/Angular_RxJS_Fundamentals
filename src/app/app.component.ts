@@ -1,6 +1,6 @@
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
-import { AsyncSubject } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
+import { AsyncSubject, BehaviorSubject } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
 
 @Component({
   selector: 'app-root',
@@ -11,22 +11,19 @@ export class AppComponent {
 
   constructor() {
 
-    //Generic olarakta kullanılabilir
-    const mySubject = new AsyncSubject();
+    //İlk data new lenince verilmelidir
+    const mySubject = new BehaviorSubject("Birinci Değer");
 
     mySubject.subscribe(data=>{
-      console.log("1. "+data);
+      console.log(data);
     });
 
     mySubject.subscribe(data=>{
-      console.log("2. "+data);
+      console.log(data);
     });
 
-
-
-    mySubject.next(Math.random());
-    //Dataların alınabilmesi için Complete metodunun çalışması gerekiyor
-    mySubject.complete();
+    //Async Subject gibi subscribe olduktan sonra değer tanımlıyoruz.Her iki nesnemiz data yayınlama işlemini gerçekleştiriyor
+    mySubject.next("İkinci Değer");
 
   }
 
