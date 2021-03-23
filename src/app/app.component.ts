@@ -1,6 +1,6 @@
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Component } from '@angular/core';
-import { AsyncSubject, BehaviorSubject } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
+import { ReplaySubject } from "rxjs"; //RxJS operators lerini kullanabilmek için import ettik
 
 @Component({
   selector: 'app-root',
@@ -11,8 +11,16 @@ export class AppComponent {
 
   constructor() {
 
-    //İlk data new lenince verilmelidir
-    const mySubject = new BehaviorSubject("Birinci Değer");
+    //İlk parametrede sondan itibaren kaç datanın gösterileceğini belirliyoruz
+    const mySubject = new ReplaySubject(3);
+
+
+    //Datalarımızı tanımlıyoruz
+    mySubject.next(1);
+    mySubject.next(2);
+    mySubject.next(3);
+    mySubject.next(4);
+    mySubject.next(5);
 
     mySubject.subscribe(data=>{
       console.log(data);
@@ -22,8 +30,6 @@ export class AppComponent {
       console.log(data);
     });
 
-    //Async Subject gibi subscribe olduktan sonra değer tanımlıyoruz.Her iki nesnemiz data yayınlama işlemini gerçekleştiriyor
-    mySubject.next("İkinci Değer");
 
   }
 
