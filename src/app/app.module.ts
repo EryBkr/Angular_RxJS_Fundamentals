@@ -3,16 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {HttpClientModule} from "@angular/common/http";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FirstComponent } from './first/first.component';
+import { SecondComponent } from './second/second.component';
+import { CurrencyService } from './services/currency.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FirstComponent,
+    SecondComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    //HTTP İstekleri ve form işlemleri için oluşturduk
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [CurrencyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
